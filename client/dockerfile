@@ -1,11 +1,5 @@
-# То же самое, что и в серверном Dockerfile.
-
 FROM python:latest
 
-# Импортируем 'client.py' в папку '/client/'.
-
 ADD main.py /app/
-
-# Устанавливаем в качестве рабочей директории '/client/'.
 
 WORKDIR /app/
