@@ -1,0 +1,5 @@
+client/.venv/
+client/.dockerignore
+
+server/.venv/
+server/.dockerignore
