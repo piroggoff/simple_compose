@@ -1,5 +1,7 @@
 client/.venv/
 client/.dockerignore
+client/database_auth.json
 
 server/.venv/
 server/.dockerignore
+.DS_Store

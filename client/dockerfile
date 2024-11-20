@@ -1,5 +1,7 @@
 FROM python:latest
 
-ADD main.py /app/
+ADD main.py database_auth.json requirements.txt /app/
 
 WORKDIR /app/
+
+RUN pip install --no-cache-dir -r requirements.txt
