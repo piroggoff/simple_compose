@@ -1,6 +1,0 @@
-FROM  python:latest
-
-ADD main.py /app/
-ADD index.html /app/
-
-WORKDIR /app/ 

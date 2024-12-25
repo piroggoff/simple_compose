@@ -1,7 +1,9 @@
 client/.venv/
 client/.dockerignore
-client/database_auth.json
 
-server/.venv/
-server/.dockerignore
+main_server/.venv/
+main_server/.dockerignore
 .DS_Store
+main_server/.env.secret
+main_server/__pycache__
+main_server/main_server.log
