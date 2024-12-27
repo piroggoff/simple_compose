@@ -2,7 +2,7 @@ import os
 import psycopg2
 from dotenv import dotenv_values, load_dotenv
 from pydantic import BaseModel
-from logger_hand import *
+from logger_hand import logger
 
 class User(BaseModel):
     id: int = None 
@@ -11,16 +11,17 @@ class User(BaseModel):
 
 load_dotenv('.env.secret')
 
-host = os.getenv('HOST_URL')
-port = os.getenv('HOST_PORT')
-database = os.getenv('DB_NAME')
-password = os.getenv('DB_PASSWORD')
-user = os.getenv('DB_USER')
+db_ip = 'postgres_database'
+db_port = 5432
+db_name = os.getenv('PG_DBNAME')
+db_username = os.getenv('PG_USERNAME')
+db_userpass = os.getenv('PG_USERPASS')
 
+print(db_username)
 
 #**connection_data
 def database_request(request: str = None) -> list: # Database request with env variables
-    with psycopg2.connect(host=host, port=port, database=database, user=user, password=password) as connection:
+    with psycopg2.connect(host=db_ip, port=db_port, database=db_name, user=db_username, password=db_userpass) as connection:
         cursor = connection.cursor()
         cursor.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'users'")
         columns = [elem[0] for elem in cursor.fetchall()] # Converting list[tuple] into list[]
@@ -31,8 +32,8 @@ def database_request(request: str = None) -> list: # Database request with env v
     logger.info('DB request has been executed')
     return columns
 
-def verify_logindata(login: str, password: str) -> bool:
-    request = f"SELECT * FROM users as u WHERE u.login LIKE '{login}'"
+def verify_logindata(userdata: User) -> bool:
+    request = f"SELECT * FROM users as u WHERE u.login LIKE '{userdata.name}'"
     database_answer = database_request(request) 
     if len(database_answer) != 1: # Overflow or zero results 
         if len(database_answer) > 1: 
@@ -41,6 +42,6 @@ def verify_logindata(login: str, password: str) -> bool:
                 logger.debug(x['id'])
         return False
     else:
-        if any([elem['password'] == password for elem in database_answer]): 
+        if any([elem['password'] == userdata.password for elem in database_answer]): 
             return True
         return False

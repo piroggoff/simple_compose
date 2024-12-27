@@ -6,9 +6,9 @@ logger.setLevel(logging.DEBUG)
 
 # handlers definition
 console_handler = logging.StreamHandler()
-file_handler = logging.FileHandler('client.log')
+file_handler = logging.FileHandler('./client.log')
 console_handler.setLevel(logging.DEBUG)
-file_handler.setLevel(logging.ERROR)
+file_handler.setLevel(logging.DEBUG)
 
 # formatting time
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')

@@ -6,15 +6,16 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: ptest 
-      POSTGRESS_DB: general
+      POSTGRES_DB: general
     volumes:
       - users_database:/var/lib/postgresql/data
     networks:
       - composer_net
-    
+    expose:
+      - 5432
 
-  main_server:
-    build: main_server/
+  server:
+    build: server/
     command: fastapi run ./server_handler.py
     depends_on:
       - postgres_database
@@ -22,12 +23,16 @@ services:
       - 8000:8000
     networks:
       - composer_net
+      - virtual_external_net
       
   client:
     build: client/
     command: python ./client_request.py
     depends_on:
-      - main_server
+      - server
+    networks:
+      - composer_net
+      - virtual_external_net
   
 volumes:
   users_database:
@@ -35,8 +40,6 @@ volumes:
 
 networks:
   composer_net:
-    name: composer_main_network
-    external: true
-
+  virtual_external_net:
     
 

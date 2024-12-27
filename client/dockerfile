@@ -1,5 +1,6 @@
-FROM python:latest
+FROM python:bullseye
 WORKDIR /app/
-COPY client_request.py logger_hand.py /app/
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
+COPY client_request.py logger_hand.py /app/
+

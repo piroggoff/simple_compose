@@ -1,10 +1,13 @@
 import requests
 import json
-from logger_hand import *
+from time import sleep
+from logger_hand import logger
 
-url = "http://127.0.0.1:8000/login"
+url = "http://server:8000/login"
 data = {"name":"evgenz", "password":"bad"}
 headers = {"Content-Type": "application/json"}
 
-with requests.post(url, headers=headers, json=data) as response:
-    logger.info(response.json())
+for i in range(10):
+    sleep(5)
+    with requests.post(url, headers=headers, json=data) as response:
+        logger.error(response.json())

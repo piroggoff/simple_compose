@@ -1,12 +1,12 @@
 import logging
 
 # creating logger
-logger = logging.getLogger('main_server')
+logger = logging.getLogger('server')
 logger.setLevel(logging.DEBUG)
 
 # handlers definition
 console_handler = logging.StreamHandler()
-file_handler = logging.FileHandler('main_server.log')
+file_handler = logging.FileHandler('server.log')
 console_handler.setLevel(logging.DEBUG)
 file_handler.setLevel(logging.ERROR)
 
@@ -18,9 +18,4 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
-# Example log messages
-# server_logger.debug('This is a debug message')
-# logger.info('This is an info message')
-# logger.warning('This is a warning message')
-# logger.error('This is an error message')
-# logger.critical('This is a critical message')
+
