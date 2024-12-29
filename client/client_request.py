@@ -8,6 +8,6 @@ data = {"name":"evgenz", "password":"bad"}
 headers = {"Content-Type": "application/json"}
 
 for i in range(10):
-    sleep(5)
     with requests.post(url, headers=headers, json=data) as response:
-        logger.error(response.json())
+        logger.info(response.json())
+        sleep(5)

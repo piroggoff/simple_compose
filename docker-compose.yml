@@ -13,23 +13,37 @@ services:
       - composer_net
     expose:
       - 5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d admin -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 1s
 
   server:
     build: server/
     command: fastapi run ./server_handler.py
     depends_on:
-      - postgres_database
+      postgres_database:
+        condition: service_healthy
     ports:
       - 8000:8000
     networks:
       - composer_net
       - virtual_external_net
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://127.0.0.1:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 1s
       
   client:
     build: client/
     command: python ./client_request.py
     depends_on:
-      - server
+      server:
+        condition: service_healthy
     networks:
       - composer_net
       - virtual_external_net
