@@ -6,6 +6,9 @@ from logger_hand import logger
 
 app = FastAPI()
 
+@app.get("/health")
+async def health_check():
+    return Response(status_code=200)
 
 @app.get("/")
 async def index():
@@ -21,6 +24,3 @@ async def login_in(userdata: User):
         return {"message": "Login successed", "data":userdata}
     return {"message":"Wrong credentials", "code":404}
 
-@app.get("/health")
-async def health_check():
-    return Response(status_code=200)
