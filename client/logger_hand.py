@@ -7,7 +7,7 @@ logger.setLevel(logging.DEBUG)
 # handlers definition
 console_handler = logging.StreamHandler()
 file_handler = logging.FileHandler('./client.log')
-console_handler.setLevel(logging.info)
+console_handler.setLevel(logging.INFO)
 file_handler.setLevel(logging.ERROR)
 
 # formatting time
